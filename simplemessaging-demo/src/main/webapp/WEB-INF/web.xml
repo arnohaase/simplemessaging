@@ -10,8 +10,8 @@
     </listener>
 
     <servlet>
-        <servlet-name>dummy</servlet-name>
-        <servlet-class>server.DummyServlet</servlet-class>
+        <servlet-name>publish</servlet-name>
+        <servlet-class>server.PublishServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>asyncpolling</servlet-name>
@@ -29,8 +29,8 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>dummy</servlet-name>
-        <url-pattern>/dummy</url-pattern>
+        <servlet-name>publish</servlet-name>
+        <url-pattern>/publish</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>asyncpolling</servlet-name>
