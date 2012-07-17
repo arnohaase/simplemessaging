@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+    version="3.0">
+
+    <listener>
+        <listener-class>de.arnohaase.simplemessaging.server.servlet.MessagingServletContextListener</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>dummy</servlet-name>
+        <servlet-class>server.DummyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>asyncpolling</servlet-name>
+        <servlet-class>server.AsyncPollingServlet</servlet-class>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet>
+        <servlet-name>syncpolling</servlet-name>
+        <servlet-class>server.SyncPollingServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>clustersync</servlet-name>
+        <servlet-class>de.arnohaase.simplemessaging.server.servlet.ClusterMessagingNotificationServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>dummy</servlet-name>
+        <url-pattern>/dummy</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>asyncpolling</servlet-name>
+        <url-pattern>/async</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>syncpolling</servlet-name>
+        <url-pattern>/sync</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>clustersync</servlet-name>
+    	<url-pattern>/clustersync</url-pattern>
+    </servlet-mapping>
+</web-app>
+

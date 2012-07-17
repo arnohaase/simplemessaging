@@ -25,6 +25,7 @@ public class InMemoryMessageStore implements MessageStore {
     
     @Override
     public synchronized void addMessage (MessageCategory category, String categoryDetails, Object msgData, Runnable publish) {
+        System.out.println("adding message");
         _messages.addLast (new SimpleMessage (getNextMessageNumber (), category, categoryDetails, msgData));
         _timestamps.addLast (System.currentTimeMillis ());
         publish.run ();
@@ -54,6 +55,7 @@ public class InMemoryMessageStore implements MessageStore {
     
     @Override
     public synchronized List <Message> getMessages (long minMsgNumberRaw, Collection<MessageCategory> categories) {
+        System.out.println("getting messages");
         final List<Message> result = new ArrayList<Message> ();
 
         int index = -1;

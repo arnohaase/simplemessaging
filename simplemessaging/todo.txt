@@ -1,0 +1,59 @@
+todo
+----
+* Build
+* Doku
+
+* DateSerDeser
+* Optimierung: "nächste Nummer" vom Server an den Client übertrgaen statt sie aus den übertragenen Nachrichten ermitteln 
+* abstrakte Methoden aus den beiden abstrakten Servlets in ein gemeinsames Interface rausziehen --> Übersichtlichkeit?
+* Parameter vom Client zum Server (?) 
+
+* Tests
+  * JUnit
+  * HibernateMessageStore
+  * Betrieb im Cluster
+* Java Script-Frontend
+
+doku
+----
+*  *immer* Nummer reinreichen, ab der es interessiert --> einfaches, recht robustes Protokoll für ACK (wie steht es mit mehreren parallelen Zugriffen mit der selben ConsumerId?)
+* exponentiell längere Verzögerung im Fehlerfall
+* Authentizierung gegen Webseal
+  * --> was ist mit Verbindungs-Timeout? neue TAM-Session-ID? --> Callback zum *Holen* der HTTP-Header reinreichen?
+* Clusterfähigkeit
+  * "Rundmail" an alle Knoten
+
+
+* Parameter am Request: > 0 --> ab Message Nummer, <= 0: ab akt. und X in die Vergangenheit
+* Timeouts - welche gibt es auf einer typischen VW-Strecke, wie beeinflusst man sie, was sind gute Werte
+* Konfiguration
+* Dreiteilung: Transport, Messaging im Server, Client
+* Abgrenzung von MQ
+  * Security: feingranulare Berechtigungen / Filterung *im Server*
+  * keine "garantierte Zustellung"
+    * kein Resend, wenn ein Client "wegbricht"
+    * relevant für Szenarien, wo ein Client beim Neustart (oder auch sonst bei Bedarf) den relevanten Zustand ohnehin abrufen kann
+* Footprint insbesondere im synchronen Fall (WAS)
+* Beispiele für die Verwendung
+  * Szenarien
+    * ohne Latenz zwischen Polling-Aufrufen oder mit Latenz dazwischen (je nach Häufigkeit der Messages im Server)
+  * Code
+* entweder synchrones oder asynchrones Servlet - eines reicht immer
+* Kriterien für die Vergabe der ConsumerId
+  * gleich über Aufrufe hinweg
+  * Empfehlungen, Szenarien, Helper-Methoden im Servlet
+* Message-Lebenszyklus und -Vergabe an Clients
+  * "ab jetzt"
+  * "allles"
+  * "die letzten X Millisekunden (?)"
+* Verwendung von Category und CategoryDetails
+  * Security-Implikationen
+  * Category zum groben Vorfiltern
+  * CategoryDetails zum feinen Filtern *im Server*
+    * z.B. ID des Schätzprojekts, das sich geändert hat, Nummer der Maschine, von der die Fehlermeldung kommt, ...
+* Schneiden von Messages / Daten
+  * eine Handvoll Primitives: Die tatsächlichen Daten senden
+  * größere Datenmengen / Objekte: Benachrichtigung senden, so dass der Client sich die Daten holt
+* MessageStore auf Basis einer Datenbank
+
+

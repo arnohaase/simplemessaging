@@ -85,6 +85,8 @@ public class MessagingImpl {
     private List <Message> getMessagesFor (MessageConsumer consumer) throws Exception {
         final List<Message> result = new ArrayList<Message> ();
         
+        System.out.println("getting messages from " + (System.identityHashCode(_messageStore)));
+        
         for (Message msg: _messageStore.getMessages (consumer.getMinInterestingMessageNumber (), consumer.getRelevantCategories ()))
             if (consumer.shouldReceive (msg))
                 result.add (msg);
@@ -110,6 +112,7 @@ public class MessagingImpl {
     }
     
     public void publishMessage (final MessageCategory category, String categoryDetails, Object msgData) throws Exception {
+        System.out.println("publishing to " + System.identityHashCode(_messageStore));
         _messageStore.addMessage (category, categoryDetails, msgData, new Runnable () {
             public void run () {
                 // perform checks and notifications of consumers in a different thread: mainly decoupling from the calling thread. 

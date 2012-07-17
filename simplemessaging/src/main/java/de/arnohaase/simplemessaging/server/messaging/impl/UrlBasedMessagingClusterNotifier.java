@@ -8,6 +8,7 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.params.HttpClientParams;
 
 import de.arnohaase.simplemessaging.server.messaging.config.MessagingClusterNotifier;
 import de.arnohaase.simplemessaging.server.messaging.config.MessagingLogger;
@@ -17,7 +18,13 @@ public class UrlBasedMessagingClusterNotifier implements MessagingClusterNotifie
     private final ExecutorService _threadPool;
     private final Collection<String> _serverUrls;
     private final MessagingLogger _logger;
-    private final HttpClient _httpClient = new HttpClient ();
+    private final HttpClient _httpClient = new HttpClient (createHttpClientConfig());
+    
+    private static HttpClientParams createHttpClientConfig() {
+        final HttpClientParams result = new HttpClientParams();
+        result.setConnectionManagerClass(MultiThreadedHttpConnectionManager.class);
+        return result;
+    }
     
     public UrlBasedMessagingClusterNotifier (Collection<String> serverUrls, int anzNotificationThreads, MessagingLogger logger) {
         _threadPool = Executors.newFixedThreadPool (anzNotificationThreads);
@@ -40,6 +47,7 @@ public class UrlBasedMessagingClusterNotifier implements MessagingClusterNotifie
     }
 
     public void notifyAllMessagingInstances () {
+        //TODO leave out the sending cluster node
         for (final String serverUrl: _serverUrls) {
             _threadPool.execute (new Runnable () {
                 public void run () {
