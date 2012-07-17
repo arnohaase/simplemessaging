@@ -31,7 +31,6 @@ public class ClusterMessagingNotificationServlet extends HttpServlet {
 
     @Override
     protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("cluster notification at" + req.getRequestURI());
         getMessaging ().newMessagesHaveArrived ();
     }
 }
